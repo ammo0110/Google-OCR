@@ -18,6 +18,10 @@ def ocrconvert_file(inputf, outputf, keyf):
         with open(outputf, "w") as outfp:
             ocrconvert.full_annotate_text(keyfp.read(), infp, outfp)
 
+def ocrconvert_multifiles(inputf, outputf, keyf):
+    with open(keyf, "r") as keyfp:
+        ocrconvert.schedule_threads(keyfp.read(), inputf, outputf)
+
 args = parser.parse_args()
 
 SUPPORTED = [".jpg", ".png"]
@@ -29,6 +33,8 @@ elif args.recursive == False:
     sys.exit(0)
 elif args.recursive == True and os.path.isdir(args.input) == True:
     outRoot = args.output
+    inputf = []
+    outputf = []
     if outRoot == None: 
         outRoot = "./output"
     for dirName, subDirList, fileList in os.walk(args.input):
@@ -41,6 +47,6 @@ elif args.recursive == True and os.path.isdir(args.input) == True:
             outPath = os.path.join(outRoot, os.path.relpath(dirName, args.input))
             if os.path.exists(outPath) == False:
                 pathlib.Path(outPath).mkdir(parents=True, exist_ok=True)
-            inputf = os.path.join(dirName, fileName)
-            outputf = "{}/{}.txt".format(outPath, fileName[0:fileName.rfind(".")])
-            ocrconvert_file(inputf, outputf, args.key)
+            inputf.append(os.path.join(dirName, fileName))
+            outputf.append("{}/{}.txt".format(outPath, fileName[0:fileName.rfind(".")]))
+    ocrconvert_multifiles(inputf, outputf, args.key)
