@@ -21,14 +21,15 @@ def request_document(api_key, infp):
     # Send the request
     response = requests.post(url, data=json.dumps(body), headers={"Content-Type": "application/json"})
     if response.status_code == 200:
-        return json.loads(response.text)
+        return (True, json.loads(response.text))
     else:
-        print("Error encountered, status code {:d}".format(response.status_code))
-        return None
+        print("Error encountered, status code {:d}. Please check output file for more details".format(response.status_code))
+        return (False, json.loads(response.text))
 
 def full_annotate_text(api_key, infp, outfp=sys.stdout, paragraph_sep=1):
-    document = request_document(api_key, infp)
-    if not document:
+    retstatus, document = request_document(api_key, infp)
+    if not retstatus:
+        print(document, file=outfp)
         return
     # Since we will only send one request, we will always receive only one response
     response = document["responses"][0]
