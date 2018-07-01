@@ -4,24 +4,32 @@ Uses [Google Cloud Vision](https://cloud.google.com/vision/) to perform Optical 
 
 ## Usage
 1. Clone this repo
-> git clone https://github.com/ammo0110/Google-OCR
+```sh
+git clone https://github.com/ammo0110/Google-OCR
+```
 2. Install the requirements
-> pip3 install -r requirements.txt
-3. Enable the Cloud Vision API from Google Cloud Platform Console. Refer [this](https://cloud.google.com/vision/docs/before-you-begin)
-4. Get an API key for yourself. Refer [this](https://cloud.google.com/docs/authentication/api-keys)
+```sh
+pip3 install -r requirements.txt
+```
+3. Enable the Cloud Vision API from Google Cloud Platform Console. Refer to [this](https://cloud.google.com/vision/docs/before-you-begin)
+4. Get an API key for yourself. Refer to [this](https://cloud.google.com/docs/authentication/api-keys)
 5. Once you have the API key, execute main.py file with following arguments
-> python3 main.py `path_to_api_key_file` `path_to_input_image`
+```sh
+python3 main.py `path_to_api_key_file` `path_to_input_image`
+```
 
 ## Other features
-1. `-o/ --output` flag for redirecting output to a file
+1. `-o/--output` flag for redirecting output to a file
 2. Recursive mode for recognizing a complete directory of jpg/png images at once
 3. Multithreaded processing in case of recursive mode
 
 For help, use
-> python3 main.py --help
+```sh
+python3 main.py --help
+```
 
 ## Afterthoughts
-Google provides two kinds of APIs for it's GCP services: REST APIs and the other language specific APIs. I immediately found some issues with the Python specific APIs, which are:
+Google provides two kinds of APIs for its GCP services: REST APIs and the other language specific APIs. I immediately found some issues with the Python specific APIs, which are:
 
 1. They are written only for Python 2.
 2. You have to install Google Libraries on your system
